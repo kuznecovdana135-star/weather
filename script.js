@@ -177,9 +177,12 @@ const hourlyForecast = hourly.time
       </div>
 
       <h3>📅 Прогноз на 5 дней</h3>
-      <div class="forecast">${forecast}</div>
-    `;
-
+      <div class="forecast">${forecast}</div> 
+<h3>🕒 Почасовой прогноз</h3>
+<div class="hourly-forecast">
+  ${hourlyForecast}
+</div>
+`;
   } catch (error) {
     document.body.classList.remove(
       "weather-rain",
