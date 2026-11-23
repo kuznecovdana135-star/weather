@@ -81,6 +81,30 @@ async function searchWeather() {
     const data = await response.json();
 
     const current = data.current;
+    
+const hourly = data.hourly;
+
+const now = new Date();
+const currentHour = now.getHours();
+
+const hourlyForecast = hourly.time
+  .map((time, i) => {
+    const hour = new Date(time).getHours();
+    const weather = weatherCodes[hourly.weather_code[i]] || ["Неизвестно", "🌡️"];
+
+    return `
+      <div class="hour-card">
+        <div>${String(hour).padStart(2, "0")}:00</div>
+        <div>${weather[1]}</div>
+        <strong>${Math.round(hourly.temperature_2m[i])}°</strong>
+        <small>Осадки: ${hourly.precipitation_probability[i] ?? 0}%</small>
+      </div>
+    `;
+  })
+  .filter((_, i) => i >= currentHour)
+  .slice(0, 24)
+  .join("");
+
     const daily = data.daily;
 
     const weather = weatherCodes[current.weather_code] ||
