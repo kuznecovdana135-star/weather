@@ -1,0 +1,156 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(145deg, #071426, #102e54, #071426);
+  color: white;
+  padding: 20px;
+}
+
+.app {
+  max-width: 650px;
+  margin: auto;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 15px 0 30px;
+}
+
+.logo {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+header span {
+  color: #70baff;
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+.search {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 25px;
+}
+
+input {
+  flex: 1;
+  min-width: 0;
+  padding: 15px;
+  border-radius: 14px;
+  border: 1px solid #315578;
+  background: #142d49;
+  color: white;
+  font-size: 16px;
+}
+
+button {
+  padding: 0 18px;
+  border: none;
+  border-radius: 14px;
+  background: #2388ed;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+button:active {
+  opacity: .7;
+}
+
+.weather-card {
+  background: linear-gradient(135deg, #1c4773, #142c4b);
+  border: 1px solid #42658b;
+  border-radius: 25px;
+  padding: 25px;
+  text-align: center;
+  box-shadow: 0 15px 40px #0005;
+}
+
+.city {
+  font-size: 23px;
+  font-weight: bold;
+}
+
+.description {
+  color: #b5d8ff;
+  margin-top: 8px;
+}
+
+.icon {
+  font-size: 75px;
+  margin: 15px;
+}
+
+.temp {
+  font-size: 70px;
+  font-weight: bold;
+}
+
+.feels {
+  color: #b5d8ff;
+}
+
+.details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.detail, .day {
+  background: #193654;
+  border: 1px solid #315578;
+  border-radius: 17px;
+  padding: 17px;
+}
+
+.detail span {
+  display: block;
+  color: #9ebbd8;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.detail strong {
+  font-size: 19px;
+}
+
+h3 {
+  margin-top: 30px;
+}
+
+.forecast {
+  display: grid;
+  gap: 9px;
+}
+
+.day {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+footer {
+  text-align: center;
+  color: #8ca9c7;
+  font-size: 12px;
+  margin: 30px 0 10px;
+}
+
+footer a {
+  color: #70baff;
+}
+
+@media (max-width: 380px) {
+  body { padding: 12px; }
+  .temp { font-size: 58px; }
+  header span { font-size: 9px; }
+}
