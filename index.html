@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather — Погода</title>
+
+    <!-- Подключаем дизайн -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="app">
+        <header>
+            <div class="logo">☁️ Weather</div>
+            <span>LIVE WEATHER</span>
+        </header>
+
+        <section class="search">
+            <input
+                id="city"
+                placeholder="Введите город..."
+                value="Moscow"
+            >
+
+            <button onclick="searchWeather()">Найти</button>
+        </section>
+
+        <main id="weather">
+            <p>Загружаем погоду...</p>
+        </main>
+
+        <footer>Weather © 2026</footer>
+    </div>
+
+    <!-- Подключаем работу погоды -->
+    <script src="script.js"></script>
+
+</body>
+</html>
