@@ -1,3 +1,4 @@
+
 const weatherCodes = {
   0: ["Ясно", "☀️"],
   1: ["Преимущественно ясно", "🌤️"],
@@ -14,13 +15,39 @@ const weatherCodes = {
   71: ["Небольшой снег", "🌨️"],
   73: ["Снег", "❄️"],
   75: ["Сильный снег", "❄️"],
+  77: ["Снежные зёрна", "❄️"],
   80: ["Ливень", "🌧️"],
   81: ["Сильный ливень", "🌧️"],
   82: ["Очень сильный ливень", "⛈️"],
+  85: ["Снегопад", "🌨️"],
+  86: ["Сильный снегопад", "❄️"],
   95: ["Гроза", "⛈️"],
   96: ["Гроза с градом", "⛈️"],
   99: ["Сильная гроза", "⛈️"]
 };
+
+// Включаем анимацию в зависимости от погоды
+function setWeatherEffect(code) {
+  document.body.classList.remove(
+    "weather-rain",
+    "weather-snow"
+  );
+
+  const snowCodes = [71, 73, 75, 77, 85, 86];
+
+  const rainCodes = [
+    51, 53, 55,
+    61, 63, 65,
+    80, 81, 82,
+    95, 96, 99
+  ];
+
+  if (snowCodes.includes(code)) {
+    document.body.classList.add("weather-snow");
+  } else if (rainCodes.includes(code)) {
+    document.body.classList.add("weather-rain");
+  }
+}
 
 async function searchWeather() {
   const city = document.getElementById("city").value.trim();
@@ -55,13 +82,20 @@ async function searchWeather() {
     const current = data.current;
     const daily = data.daily;
 
-    const weather = weatherCodes[current.weather_code] || ["Неизвестно", "🌡️"];
+    const weather = weatherCodes[current.weather_code] ||
+      ["Неизвестно", "🌡️"];
+
+    // Запускаем нужную анимацию
+    setWeatherEffect(current.weather_code);
 
     const forecast = daily.time.map((date, i) => {
       const day = new Date(date + "T12:00:00")
-        .toLocaleDateString("ru-RU", { weekday: "long" });
+        .toLocaleDateString("ru-RU", {
+          weekday: "long"
+        });
 
-      const code = weatherCodes[daily.weather_code[i]] || ["", "🌡️"];
+      const code = weatherCodes[daily.weather_code[i]] ||
+        ["", "🌡️"];
 
       return `
         <div class="day">
@@ -122,8 +156,13 @@ async function searchWeather() {
     `;
 
   } catch (error) {
+    document.body.classList.remove(
+      "weather-rain",
+      "weather-snow"
+    );
+
     area.innerHTML = "⚠️ " + error.message +
-      '<br><br>Попробуйте другой город.';
+      "<br><br>Попробуйте другой город.";
   }
 }
 
