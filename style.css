@@ -1,3 +1,4 @@
+
 * {
   box-sizing: border-box;
 }
@@ -6,14 +7,78 @@ body {
   margin: 0;
   min-height: 100vh;
   font-family: Arial, sans-serif;
-  background: linear-gradient(145deg, #071426, #102e54, #071426);
+  background: linear-gradient(145deg, #061326, #12365e, #071426);
   color: white;
   padding: 20px;
+  overflow-x: hidden;
+  isolation: isolate;
 }
 
+/* Анимация погоды */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: -100px 0 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+}
+
+/* Дождь */
+body.weather-rain::before {
+  opacity: .5;
+  background: repeating-linear-gradient(
+    105deg,
+    transparent 0px,
+    transparent 12px,
+    #b9e6ff 13px,
+    transparent 14px,
+    transparent 25px
+  );
+  background-size: 45px 70px;
+  animation: rain 0.45s linear infinite;
+}
+
+/* Снег */
+body.weather-snow::before {
+  opacity: .8;
+  background-image:
+    radial-gradient(3px 3px at 20px 30px, white 99%, transparent),
+    radial-gradient(2px 2px at 70px 80px, white 99%, transparent),
+    radial-gradient(4px 4px at 120px 40px, white 99%, transparent),
+    radial-gradient(2px 2px at 160px 110px, white 99%, transparent),
+    radial-gradient(3px 3px at 210px 70px, white 99%, transparent);
+  background-size: 250px 150px;
+  animation: snowfall 8s linear infinite;
+}
+
+body.weather-snow::after {
+  opacity: .5;
+  background-image:
+    radial-gradient(2px 2px at 40px 50px, white 99%, transparent),
+    radial-gradient(3px 3px at 130px 120px, white 99%, transparent),
+    radial-gradient(2px 2px at 200px 20px, white 99%, transparent);
+  background-size: 280px 180px;
+  animation: snowfall 13s linear infinite;
+}
+
+@keyframes rain {
+  from { background-position: 0 -70px; }
+  to { background-position: 0 70px; }
+}
+
+@keyframes snowfall {
+  from { background-position: 0 -150px; }
+  to { background-position: 100px 100vh; }
+}
+
+/* Основное приложение */
 .app {
   max-width: 650px;
   margin: auto;
+  position: relative;
+  z-index: 1;
 }
 
 header {
@@ -44,34 +109,49 @@ input {
   flex: 1;
   min-width: 0;
   padding: 15px;
-  border-radius: 14px;
-  border: 1px solid #315578;
-  background: #142d49;
+  border-radius: 16px;
+  border: 1px solid #ffffff30;
+  background: #ffffff13;
+  backdrop-filter: blur(15px);
   color: white;
   font-size: 16px;
 }
 
+input::placeholder {
+  color: #b5cce5;
+}
+
 button {
-  padding: 0 18px;
-  border: none;
-  border-radius: 14px;
-  background: #2388ed;
+  padding: 0 20px;
+  border: 1px solid #ffffff25;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #329bff, #0874e5);
   color: white;
   font-size: 15px;
   font-weight: bold;
+  cursor: pointer;
+  transition: .25s;
 }
 
 button:active {
-  opacity: .7;
+  transform: scale(.95);
 }
 
+/* Главная карточка */
 .weather-card {
-  background: linear-gradient(135deg, #1c4773, #142c4b);
-  border: 1px solid #42658b;
-  border-radius: 25px;
-  padding: 25px;
+  background: linear-gradient(
+    135deg,
+    #ffffff20,
+    #ffffff08
+  );
+  border: 1px solid #ffffff35;
+  border-radius: 30px;
+  padding: 28px;
   text-align: center;
-  box-shadow: 0 15px 40px #0005;
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  box-shadow: 0 20px 60px #0005;
+  transition: .4s;
 }
 
 .city {
@@ -85,19 +165,27 @@ button:active {
 }
 
 .icon {
-  font-size: 75px;
-  margin: 15px;
+  font-size: 80px;
+  margin: 20px;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
 
 .temp {
-  font-size: 70px;
+  font-size: 75px;
   font-weight: bold;
+  text-shadow: 0 5px 25px #ffffff25;
 }
 
 .feels {
   color: #b5d8ff;
 }
 
+/* Дополнительные показатели */
 .details {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -106,15 +194,23 @@ button:active {
 }
 
 .detail, .day {
-  background: #193654;
-  border: 1px solid #315578;
-  border-radius: 17px;
-  padding: 17px;
+  background: #ffffff12;
+  border: 1px solid #ffffff25;
+  border-radius: 20px;
+  padding: 18px;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  transition: .3s;
+}
+
+.detail:hover, .day:hover {
+  background: #ffffff20;
+  transform: translateY(-2px);
 }
 
 .detail span {
   display: block;
-  color: #9ebbd8;
+  color: #b5d0e9;
   font-size: 13px;
   margin-bottom: 8px;
 }
@@ -129,7 +225,7 @@ h3 {
 
 .forecast {
   display: grid;
-  gap: 9px;
+  gap: 10px;
 }
 
 .day {
@@ -140,7 +236,7 @@ h3 {
 
 footer {
   text-align: center;
-  color: #8ca9c7;
+  color: #9ab5d0;
   font-size: 12px;
   margin: 30px 0 10px;
 }
@@ -153,4 +249,11 @@ footer a {
   body { padding: 12px; }
   .temp { font-size: 58px; }
   header span { font-size: 9px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
 }
